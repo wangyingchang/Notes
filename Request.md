@@ -56,7 +56,7 @@ $.ajax({
    data: JSON.stringify(data),
    dataType: "json",
    contentType: "application/json;charset=utf-8",
-   async: true, // 异步
+   async: true, // true:异步,false:同步
    xhrFields: {
       withCredentials: true // 设置运行跨域操作
    },
