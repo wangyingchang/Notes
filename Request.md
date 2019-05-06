@@ -7,7 +7,9 @@ if (window.XMLHttpRequest) {
 }else {
   xhr = new ActiveXObject('Microsoft.XMLHTTP'); //for ie6
 }
+// 初始化请求:第三个参数默认是true，也就是异步的
 xhr.open("GET","/customer/getinfo",true);
+// POST请求,要模拟表单提交请求的话就将Content-type头部信息设置为application/x-www-form-urlencoded，并且发送的是一个经过序列化之后的字符串
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhr.send(null);
 xhr.onreadystatechange=function(){
@@ -21,6 +23,18 @@ xhr.onreadystatechange=function(){
 };
 ~~~
 
+readyState属性可能的取值如下:
+- 0：未初始化，尚未调用open()方法
+- 1：启动。已经调用open()方法，但尚未调用send()方法
+- 2：发送：已经调用send()方法，但尚未收到响应
+- 3：接收。已经接收到部分响应数据。
+- 4：完成。已经接收到全部响应数据，而且已经可以在客户端使用了。
+
+响应的数据会自动填充XHR对象的属性，包含以下属性:
+-responseText：作为响应主题被放回的文本
+-responseXML：如果响应的内容类型是"text/xml"或"application/xml",这个属性中将保存包含着响应数据的XMLDOM文档
+-status：响应的HTTP状态
+-statusText：HTTP状态的说明
 
 
 ##### 2.jQuery ajax
