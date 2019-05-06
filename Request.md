@@ -31,10 +31,10 @@ readyState属性可能的取值如下:
 - 4：完成。已经接收到全部响应数据，而且已经可以在客户端使用了。
 
 响应的数据会自动填充XHR对象的属性，包含以下属性:
--responseText：作为响应主题被放回的文本
--responseXML：如果响应的内容类型是"text/xml"或"application/xml",这个属性中将保存包含着响应数据的XMLDOM文档
--status：响应的HTTP状态
--statusText：HTTP状态的说明
+- responseText：作为响应主题被放回的文本
+- responseXML：如果响应的内容类型是"text/xml"或"application/xml",这个属性中将保存包含着响应数据的XMLDOM文档
+- status：响应的HTTP状态
+- statusText：HTTP状态的说明
 
 
 ##### 2.jQuery ajax
