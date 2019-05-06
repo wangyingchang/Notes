@@ -1,18 +1,18 @@
 ##### 1.原生ajax
 
 ~~~javascript
-var ajax = null;
+var xhr = null;
 if (window.XMLHttpRequest) {
-  ajax = new XMLHttpRequest(); //for ie7+,FireFox,Chorme,Opera,Safai...
+  xhr = new XMLHttpRequest(); //for ie7+,FireFox,Chorme,Opera,Safai...
 }else {
-  ajax = new ActiveXObject('Microsoft.XMLHTTP'); //for ie6
+  xhr = new ActiveXObject('Microsoft.XMLHTTP'); //for ie6
 }
-ajax.open("GET","/customer/getinfo",true);
-ajax.send(null);
-ajax.onreadystatechange=function(){
-    if(ajax.readyState==4){
-        if(ajax.status==200){
-            console.log(ajax.responseText);
+xhr.open("GET","/customer/getinfo",true);
+xhr.send(null);
+xhr.onreadystatechange=function(){
+    if(xhr.readyState==4){
+        if(xhr.status==200){
+            console.log(xhr.responseText);
         }else{
             console.log('请求失败！')
         }
