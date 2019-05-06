@@ -18,8 +18,8 @@ if (window.XMLHttpRequest) {
 xhr.open("post","/customer/getinfo",true);
 // 3.设置请求头:POST请求需要,要模拟表单提交请求的话就将Content-type头部信息设置为application/x-www-form-urlencoded，并且发送的是一个经过序列化之后的字符串
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-// 4.发送参数
-xhr.send(JSON.stringify(params));
+// 4.发送参数:JSON.stringify()是将javascript对象序列化为字符串
+xhr.send(JSON.stringify(params)); 
 // 5. 监控请求状态，
 xhr.onreadystatechange=function(){
     if(xhr.readyState==4){
@@ -53,14 +53,21 @@ readyState属性可能的取值如下:
 $.ajax({
    type: 'get',
    url: url,
-   data: data,
+   data: JSON.stringify(data),
    dataType: "json",
    contentType: "application/json;charset=utf-8",
+   async: true, // 异步
+   xhrFields: {
+      withCredentials: true // 设置运行跨域操作
+   },
    success: function (data) {
    	   console.log("success:")
        console.log(data)
    },
    error: function (XMLHttpRequest, textStatus, errorThrown) {
+        if (callErrorBack instanceof Function) {
+            callErrorBack();
+        }
    		console.log("error:", url);
         console.log('error:' + errorThrown);
    }
@@ -71,7 +78,7 @@ $.ajax({
 
 - 本身是针对MVC的编程,不符合现在前端MVVM的浪潮
 - 基于原生的XHR开发，XHR本身的架构不清晰，已经有了fetch的替代方案
-- JQuery整个项目太大，单纯使用ajax却要引入整个JQuery非常的不合理（采取个性化打包的方案又不能享受CDN服务）
+- JQuery整个项目太大，单纯使用$.ajax却要引入整个JQuery非常的不合理（采取个性化打包的方案又不能享受CDN服务）
 
 
 
