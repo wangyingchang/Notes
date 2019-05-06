@@ -2,20 +2,28 @@
 
 ~~~javascript
 var xhr = null;
+var params = {
+    uname: '123',
+    password: '123'
+}
+// 1.获取xhr对象
 if (window.XMLHttpRequest) {
   xhr = new XMLHttpRequest(); //for ie7+,FireFox,Chorme,Opera,Safai...
 }else {
   xhr = new ActiveXObject('Microsoft.XMLHTTP'); //for ie6
 }
-// 初始化请求:第三个参数默认是true，也就是异步的
-xhr.open("GET","/customer/getinfo",true);
-// POST请求,要模拟表单提交请求的话就将Content-type头部信息设置为application/x-www-form-urlencoded，并且发送的是一个经过序列化之后的字符串
+// 2.初始化请求:这个方法不会发送请求，但会初始化一个请求准备发送;第三个参数默认是true，也就是异步的
+xhr.open("post","/customer/getinfo",true);
+// 3.设置请求头:POST请求需要,要模拟表单提交请求的话就将Content-type头部信息设置为application/x-www-form-urlencoded，并且发送的是一个经过序列化之后的字符串
 xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-xhr.send(null);
+// 4.发送参数
+xhr.send(JSON.stringify(params));
+// 5. 监控请求状态，
 xhr.onreadystatechange=function(){
     if(xhr.readyState==4){
         if(xhr.status==200){
-            console.log(xhr.responseText);
+            // 6.处理请求数据
+            console.log(JSON.parse(xhr.responseText));
         }else{
             console.log('请求失败！')
         }
