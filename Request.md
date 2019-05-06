@@ -8,6 +8,7 @@ if (window.XMLHttpRequest) {
   xhr = new ActiveXObject('Microsoft.XMLHTTP'); //for ie6
 }
 xhr.open("GET","/customer/getinfo",true);
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhr.send(null);
 xhr.onreadystatechange=function(){
     if(xhr.readyState==4){
