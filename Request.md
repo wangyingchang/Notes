@@ -6,11 +6,13 @@ var params = {
     uname: '123',
     password: '123'
 }
-// 1.获取xhr对象
+// 1.获取xhr对象:
 if (window.XMLHttpRequest) {
-  xhr = new XMLHttpRequest(); //for ie7+,FireFox,Chorme,Opera,Safai...
+  // for ie7+,FireFox,Chorme,Opera,Safai...
+  xhr = new XMLHttpRequest(); 
 }else {
-  xhr = new ActiveXObject('Microsoft.XMLHTTP'); //for ie6
+  // for <ie7:由于IE5是第一款引入XHR对象的浏览器，所以在IE7之前其实都不是叫XMLHttpRequest.
+  xhr = new ActiveXObject('Microsoft.XMLHTTP'); 
 }
 // 2.初始化请求:这个方法不会发送请求，但会初始化一个请求准备发送;第三个参数默认是true，也就是异步的
 xhr.open("post","/customer/getinfo",true);
