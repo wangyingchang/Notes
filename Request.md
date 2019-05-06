@@ -49,7 +49,7 @@ readyState属性可能的取值如下:
 
 ##### 2.jQuery ajax
 
-~~~
+~~~javascript
 $.ajax({
    type: 'get',
    url: url,
@@ -84,7 +84,7 @@ $.ajax({
 
 ##### 3.axios
 
-~~~
+~~~javascript
 axios({
     method: 'post',
     url: '/user/12345',
@@ -112,7 +112,7 @@ axios({
 
 ##### 4.fetch
 
-~~~
+~~~javascript
 try {
   let response = await fetch(url);
   let data = response.json();
