@@ -133,3 +133,399 @@ DOM4J有更复杂的api,所以dom4j比jdom有更大的灵活性.DOM4J性能最�
 　　"SYSTEM/PUBLIC"这两个参数只用其一。SYSTEM是指文档使用的私有DTD文件的网址，而PUBLIC则指文档调用一个公用的DTD文件的网址。
 　　"dtd-name" 就是DTD文件的网址和名称。所有DTD文件的后缀名为".dtd"。
 ~~~
+
+##### 8.XML解析实例
+
+解析students.xml文件
+~~~xml
+<?xml version="1.0" encoding="utf-8"?>
+<students>
+	<student no="001">
+		<name>张三丰</name>
+		<sex>男</sex>
+		<major>挖掘机专业</major>	
+	</student>
+	<student no="002">
+		<name>李逍遥</name>
+		<sex>女</sex>
+		<major>撩妹专业</major>	
+	</student>
+	<student no="003">
+		<name>碧瑶</name>
+		<sex>男</sex>
+		<major>撩汉专业</major>	
+	</student>
+</students>
+~~~
+
+**8.1 DOM解析**
+-- ParseByDom.java
+~~~java
+package com.xml.parse;
+ 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+ 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+ 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+ 
+import com.xml.model.Student;
+ 
+public class ParseByDom {
+ 
+	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {		
+		
+		//声明一个集合用于存储解析文件之后获取的数据
+		List<Student> students=new ArrayList<Student>();
+		
+		//获取需要被解析的文件对象
+		File f=new File("src/student.xml");	
+		
+		//获取解析工厂
+		DocumentBuilderFactory factory=DocumentBuilderFactory.newInstance();
+		//获取解析器对象
+		DocumentBuilder builder=factory.newDocumentBuilder();
+		//解析文件获取一个document对象
+		Document document=builder.parse(f);	
+		
+		//builder.parse(is);
+		
+		//获取指定标签的所有元素对象(student元素)
+		NodeList list=document.getElementsByTagName("student");
+		
+		for(int i=0;i<list.getLength();i++){			
+			//获取每一个遍历的元素
+			Element element=(Element)list.item(i);
+			//获取当前元素的指定属性值
+			String no=element.getAttribute("no");
+			//获取子元素
+			Element ename=(Element)element.getElementsByTagName("name").item(0);
+			Element esex=(Element)element.getElementsByTagName("sex").item(0);
+			Element emajor=(Element)element.getElementsByTagName("major").item(0);
+			String name=ename.getTextContent();
+			String sex=ename.getTextContent();
+			String major=emajor.getTextContent();
+			
+			Student s=new Student(no,name,sex,major);
+			students.add(s);
+		
+		}		
+		for(Student student:students){
+			System.out.println(student);
+		}		
+	}
+}
+~~~
+
+
+**8.2 SAX 解析**
+-- ParseBySax.java
+~~~java
+package com.xml.parse;
+ 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+ 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+ 
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+ 
+import com.xml.model.Student;
+ 
+public class ParseBySax {
+	public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
+				
+		File file=new File("src/student.xml");		
+		//获取sax解析工厂
+		SAXParserFactory factory=SAXParserFactory.newInstance();		
+		//创建解析器对象
+		SAXParser parser=factory.newSAXParser();
+		
+		MyHandler handler=new MyHandler();
+		
+		//开始解析
+		parser.parse(file,handler);
+		
+		List<Student> students=handler.getStudents();
+		
+		for (Student student : students) {
+			System.out.println(student);
+		}		
+	}
+}
+~~~
+MyHandler.java
+~~~java
+package com.xml.parse;
+ 
+import java.util.ArrayList;
+import java.util.List;
+ 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+ 
+import com.xml.model.Student;
+ 
+ 
+/**
+ * 事件处理器
+ * @author Administrator
+ *
+ */
+ 
+public class MyHandler extends DefaultHandler{
+	
+	private List<Student> students;
+	private Student tempStu;//声明当前读取到的学生对象
+	private String tag;//声名变量记录当前的标记	
+	
+	//对外暴露一个方法，返回一个集合对象	
+	public List<Student> getStudents() {
+		return students;
+	}
+ 
+	@Override
+	public void startDocument() throws SAXException {
+		System.out.println("开始解析");		
+		students=new ArrayList<Student>();
+	}
+ 
+	@Override
+	public void startElement(String uri, String localName, String qName,
+			Attributes attributes) throws SAXException {
+		tag=qName;
+		//如果读取到的元素开始标记为student则创建学生对象，并获取no属性值
+		if("student".equals(qName)){
+			tempStu=new Student();
+			String no=attributes.getValue("no");
+			tempStu.setNo(no);
+			students.add(tempStu);
+		}	
+	}
+		
+	@Override
+	public void characters(char[] ch, int start, int length)
+			throws SAXException {
+		String s=new String(ch,start,length);
+		if("name".equals(tag)){
+			tempStu.setName(s);
+		}else if("sex".equals(tag)){
+			tempStu.setSex(s);
+		}else if("major".equals(tag)){
+			tempStu.setMajor(s);
+		}	
+			
+	}
+	
+	@Override
+	public void endElement(String uri, String localName, String qName)
+			throws SAXException {
+		//将标记置空
+		tag=null;	
+	}
+	
+	@Override
+	public void endDocument() throws SAXException {
+		System.out.println("解析完成");		
+	}
+	
+}
+~~~
+**8.3 JDOM解析**
+~~~java
+package com.xml.parse;
+ 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+ 
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+ 
+import com.xml.model.Student;
+ 
+public class ParseByJDOM {
+	
+	public List<Student> parse() throws JDOMException, IOException{
+		List<Student> students=new ArrayList<Student>();
+		
+		File file=new File("src/student.xml");
+		
+		//创建jdom
+		SAXBuilder builder=new SAXBuilder();
+		
+		//解析指定文件获取文档对象
+		Document document=builder.build(file);
+		
+		//获取文档根节点
+		Element root=document.getRootElement();
+		
+		//获取当前根节点下所有的student子节点
+		List<Element> list=root.getChildren("student");		
+		
+		for(Element e:list){
+			Student s=new Student();
+			String no=e.getAttributeValue("no");
+			String name=e.getChild("name").getText();
+			String sex=e.getChild("sex").getText();
+			String major=e.getChild("major").getText();
+			
+			s.setNo(no);
+			s.setName(name);
+			s.setSex(sex);
+			s.setMajor(major);
+			
+			students.add(s);			
+		}
+		
+		for (Student s : students) {
+			System.out.println(s);
+		}	
+		
+		return students;	
+	}	
+	
+	public static void main(String[] args) throws JDOMException, IOException {
+		List<Student> list=new ParseByJDOM().parse();
+	}
+}
+~~~
+
+**8.4 DOM4J解析**
+~~~java
+package com.xml.parse;
+ 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+ 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+ 
+import com.xml.model.Student;
+ 
+public class ParseByDom4j {
+ 
+	public List<Student> parse() throws DocumentException{
+		List<Student> students=new ArrayList<Student>();
+		
+		File file=new File("src/student.xml");
+		//创建解析器对象
+		SAXReader reader=new SAXReader();
+		//解析指定的文件获取文档对象
+		Document document=reader.read(file);
+		
+		Element root=document.getRootElement();
+		
+		//获取根节点下所有的student节点
+		List<Element> list=root.elements("student");
+		
+		for (Element e : list) {		
+			
+			String no=e.attributeValue("no");
+			String name=e.element("name").getTextTrim();
+			String sex=e.element("sex").getTextTrim();
+			String major=e.element("major").getTextTrim();
+			
+			Student s=new Student(no, name, major, sex);
+			
+			students.add(s);			
+		}	
+		return students;	
+	}
+	
+	
+	public List<Student> parse2() throws DocumentException{
+		List<Student> students=new ArrayList<Student>();
+		
+		File file=new File("src/student.xml");
+		//创建解析器对象
+		SAXReader reader=new SAXReader();
+		//解析指定的文件获取文档对象
+		Document document=reader.read(file);
+		
+		List<Node> nodes=document.selectNodes("students/student");
+		
+		for (Node node : nodes) {
+			String no=node.valueOf("@no");
+			String name=node.selectSingleNode("name").getText().trim();
+			String sex=node.selectSingleNode("sex").getText().trim();
+			String major=node.selectSingleNode("major").getText().trim();
+			Student s=new Student(no, name, major, sex);
+			students.add(s);		
+		}		
+		return students;	
+	}	
+	public static void main(String[] args) throws DocumentException {
+		
+		List<Student> list=new ParseByDom4j().parse2();
+		for (Student student : list) {
+			System.out.println(student);
+		}		
+	}
+	
+}
+~~~
+
+**8.5 DOM4j_xpath解析**
+~~~
+
+package com.xml.parse;
+ 
+import java.io.File;
+import java.util.List;
+ 
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+ 
+public class ParseByDom4j_xpath {	
+	public static void main(String[] args) throws DocumentException {
+		
+		File file=new File("src/student.xml");		
+		
+		SAXReader reader=new SAXReader();
+		
+		Document document=reader.read(file);
+		
+		//搜索节点
+		List<Node> nodes=document.selectNodes("students/student/name");
+		
+		for (Node node : nodes) {
+			String name=node.getText();
+			System.out.println(name);
+		}		
+		
+		List<Node> list=document.selectNodes("students/student");
+		for (Node node : list) {
+			//查询属性值
+			String no=node.valueOf("@no");
+			System.out.println(no);
+			
+			String name=node.selectSingleNode("name").getText();
+			System.out.println(name);
+			
+		}		
+	}	
+}
+~~~
