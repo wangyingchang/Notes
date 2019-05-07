@@ -1,4 +1,4 @@
- #### 场景
+ #### 1.场景
 
 作为一个合格的程序员，想把RESTFUL技术讲女朋友听，并且能给她讲懂，作为我 
 
@@ -213,9 +213,9 @@ POST /orders
 
 
 
-#### RESTFUL
+#### 2.RESTFUL
 
-##### 什么是RESTFUL？
+##### 2.1什么是RESTFUL？
 
 简单的说：RESTful是一种架构的规范与约束、原则，符合这种规范的架构就是RESTFUL架构。
 
@@ -227,11 +227,11 @@ REST是什么意思，英文Representational state transfer表述性状态转移
 
 所有的设计都是以资源为中心。
 
-##### 协议
+##### 2.2协议
 
 API与用户的通信协议，总是使用HTTP协议
 
-##### 域名
+##### 2.3域名
 
 应该尽量将API部署在专用域名之下。
 
@@ -245,7 +245,7 @@ API与用户的通信协议，总是使用HTTP协议
 https://example.org/api/
 ```
 
-##### 版本（Versioning）
+##### 2.4版本（Versioning）
 
 应该将API的版本号放入URL。
 
@@ -255,7 +255,7 @@ https://api.example.com/v1/
 
 另一种做法是，将版本号放在HTTP头信息中，但不如放入URL方便和直观。[Github](https://developer.github.com/v3/media/#request-specific-version)采用这种做法。
 
-##### 路径（Endpoint）
+##### 2.5路径（Endpoint）
 
 路径又称"终点"（endpoint），表示API的具体网址。
 在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。
@@ -267,7 +267,7 @@ https://api.example.com/v1/animals
 https://api.example.com/v1/employees
 ~~~
 
-##### HTTP动词
+##### 2.6HTTP动词
 
 对于资源的具体操作类型，由HTTP动词表示。
 
@@ -295,7 +295,7 @@ https://api.example.com/v1/employees
 > - GET /zoos/ID/animals：列出某个指定动物园的所有动物
 > - DELETE /zoos/ID/animals/ID：删除某个指定动物园的指定动物
 
-##### 过滤信息（Filtering）
+##### 2.7过滤信息（Filtering）
 
 如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。
 
@@ -309,7 +309,7 @@ https://api.example.com/v1/employees
 
 参数的设计允许存在冗余，即允许API路径和URL参数偶尔有重复。比如，GET /zoo/ID/animals 与 GET /animals?zoo_id=ID 的含义是相同的。 
 
-#### 返回结果
+#### 2.8返回结果
 
 针对不同操作，服务器向用户返回的结果应该符合以下规范。
 
