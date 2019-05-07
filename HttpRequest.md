@@ -58,7 +58,7 @@ $.ajax({
    contentType: "application/json;charset=utf-8",
    async: true, // true:异步,false:同步
    xhrFields: {
-      withCredentials: true // 设置运行跨域操作
+      withCredentials: true // 前端设置是否带cookie
    },
    success: function (data) {
    	   console.log("success:")
