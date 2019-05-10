@@ -24,12 +24,11 @@ bin: 存放启动和关闭tomcat脚本
 
 conf: 包含不同的配置文件
 
-> server.xml:  tomcat的主要配置文件,  端口号 就在里面修改 
->
-> web.xml：会话超时时间的配置 
->
-> tomcat-users.xml : 配置tomcat用户名与密码
->
+server.xml:  tomcat的主要配置文件,  端口号 就在里面修改 
+
+web.xml：会话超时时间的配置 
+
+tomcat-users.xml : 配置tomcat用户名与密码
 
 webapps :存放所有的web程序实例
 
