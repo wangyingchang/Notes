@@ -55,6 +55,28 @@ SortedSet接口：可以对集合中的数据进行排序。
 - 【**所以：ArrayList 适用于元素的随机访问**】
 
 - 底层原理图
+~~~
+        List<String> list=new ArrayList<String>();
+        list.add("hello");
+        list.add("world");
+        list.add("haha");
+
+        // 第一种遍历 foreach
+        for(String str: list){
+            System.out.println(str);
+        }
+        // 第二种遍历 链表
+        String[] strArray=new String[list.size()];
+        list.toArray(strArray);
+        for(String str:strArray){
+            System.out.println(str);
+        }
+        // 第三种遍历 迭代器
+        Iterator iterator=list.iterator();
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
+~~~
 
 **LinkedList 本质是链表**
 
@@ -263,6 +285,31 @@ entrySet()： map将每一个键值对封装成 Entry对象
             System.out.println(key);
         }
     }
+```
+```
+        Map<String,String> map=new HashMap<>();
+        map.put("1","v1");
+        map.put("2","v2");
+        map.put("3","v3");
+
+        // 第一种遍历
+        for(String key:map.keySet()){
+            System.out.println("key="+ key +",value="+ map.get(key));
+        }
+        // 第二种遍历
+        Iterator<Map.Entry<String,String>> iterator=map.entrySet().iterator();
+        while (iterator.hasNext()){
+            Map.Entry<String,String> entry=iterator.next();
+            System.out.println("key="+ entry.getKey() +",value="+entry.getValue());
+        }
+        // 第三种遍历
+        for(Map.Entry<String,String> entry:map.entrySet()){
+            System.out.println("key="+entry.getKey()+",value="+ entry.getValue());
+        }
+        // 第四种遍历
+        for(String v:map.values()){
+            System.out.println("value="+ v);
+        }
 ```
 
 
