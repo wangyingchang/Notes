@@ -1,7 +1,6 @@
 ##### **1.数组与集合**
 
-```java
-   （1）数组特征：
+（1）数组特征：
             (1)、数据类型一致；
             (2)、空间是连续；
             (3)、下标位置从0开始；
@@ -9,11 +8,10 @@
             (5)、通过下标表示数组中元素的个数：index。
 			int[] i = new int[3];
 			int[] j = {1,2,3};
-    （2）集合特征： 
+（2）集合特征： 
             (1)、集合中可以任何数据类型(Object)数据；
             (2)、自动扩容(不固定长度)；
             (3)、size() 返回集合中元素的个数；
-```
 
 
 
@@ -23,20 +21,17 @@
 
 ##### **3.Collection接口：**
 
-	Collection是保存单值集合的最大父接口
-	定义格式：
-	public interface Collection<E> extends Iterable<E>
-	所有的类集操作都存放在java.util包中。
-	在一般的开发中，往往很少去使用Collection接口直接去开发，基本是使用
-	其子接口，子接口主要有：List,Set,Queue,SortedSet
-
-~~~
+Collection是保存单值集合的最大父接口
+定义格式：
+public interface Collection<E> extends Iterable<E>
+所有的类集操作都存放在java.util包中。
+在一般的开发中，往往很少去使用Collection接口直接去开发，基本是使用
+其子接口，子接口主要有：List,Set,Queue,SortedSet
 Collection子接口
 List接口：可以存放重复的内容
 Set接口：不能存放重复的内容，所有的重复内容都是靠hashCode()、equals()和compareTO()两种方法区分的。
 Queue:队列接口。
 SortedSet接口：可以对集合中的数据进行排序。
-~~~
 
 ##### 4.List接口
 
@@ -54,7 +49,7 @@ SortedSet接口：可以对集合中的数据进行排序。
 
 - 【**所以：ArrayList 适用于元素的随机访问**】
 
-- 底层原理图
+- eg
 ~~~
         List<String> list=new ArrayList<String>();
         list.add("hello");
@@ -84,7 +79,7 @@ SortedSet接口：可以对集合中的数据进行排序。
 - 频繁的删除操作：只需要元素指针重新连接；（优点）
 - 频繁的取元素操作：需要遍历整个链表，因为链表的物理地址是不连续的；（缺点）
 - 【**所以：LinkedList适用于元素的大量添加与删除**】
-- 底层原理图
+
 
 
 
@@ -116,25 +111,22 @@ SortedSet接口：可以对集合中的数据进行排序。
 （2）HashSet 示例2
 
 ```
-	    Set<Product> proSet = new HashSet<Product>();
+	Set<Product> proSet = new HashSet<Product>();
 
-	    Product p1 = new Product(1004,"东北烤串",60,25);
+	Product p1 = new Product(1004,"东北烤串",60,25);
 
         Product p2 = new Product(1004,"东北烤串",60,25);
 
         proSet.add(p1);
 
         proSet.add(p2);
-
+```
 //为什么要重写hashcode()和equals()?
 set中存放了两个product, 但是在现实中，则认为p1,p2是同一个商品，在集合中只需要存放一次；所以需要重写Product类中的equals、hashcode方法。
 因为默认的equals方法是Object的方法，比较的是内存地址；而默认的hashcode方法返回的是对象的内存地址转换成的一个整数，实际上指的的也是内存(两个方法可以理解为比较的都是内存地址),这在实际开发的过程中在HashMap或者HashSet里如果不重写的hashcode和equals方法的话会导致我们存对象的时候，把对象存进去了，取的时候却取不到想要的对象，这时候就需要重写这两个方法了，一般可以根据业务的需求来重写；
 总结：
 1.重写hashcode是为了保证相同的对象会有相同的hashcode；
 2.重写equals是为了保证在发生冲突的情况下取得到Entry对象（也可以理解是key或是元素）；
-
-
-```
 
 **TreeSet: 有序存放**
 
