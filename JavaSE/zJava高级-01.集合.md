@@ -255,7 +255,7 @@ put(key,value)：注意返回值
 keySet()：注意返回的Set
 entrySet()： map将每一个键值对封装成 Entry对象
 
-参考Map对key-value底层的封装图
+
 
 ```java
     Set<Map.Entry<String,Integer>> entrySet=map.entrySet();
@@ -278,7 +278,7 @@ entrySet()： map将每一个键值对封装成 Entry对象
         }
     }
 ```
-```
+```java
         Map<String,String> map=new HashMap<>();
         map.put("1","v1");
         map.put("2","v2");
