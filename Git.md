@@ -27,15 +27,15 @@ ssh -T git@github.com
 
 
 
-#### Git 上传项目到GitHub
+#### Git仓库 上传项目到GitHub仓库
 
-第一步：建立git仓库 
+第一步：初始化git仓库 
 
 ~~~
 git init    // cd到你的本地项目根目录下，执行git命令
 ~~~
 
-第二步：将项目的所有文件添加到仓库中
+第二步：所有文件添加到仓库
 
 ~~~
 git add .  //如果想添加某个特定的文件，只需把.换成特定的文件名即可
@@ -47,25 +47,25 @@ git add .  //如果想添加某个特定的文件，只需把.换成特定的文
 git commit -m "注释语句"
 ~~~
 
-第四步：去github拿到创建的仓库（Repository）的https地址
+第四步：去github仓库（Repository）拿https地址
 
 ~~~
 
 ~~~
 
-第五步：将本地的仓库关联到github上
+第五步：git仓库远程关联到github仓库
 
 ~~~
 git remote add origin https:*//github.com/hanhailong/CustomRatingBar*
 ~~~
 
-第六步：上传github之前，要先pull一下，执行如下命令：
+第六步：上传到github仓库之前，要先pull一下
 
 ~~~
 git pull origin master
 ~~~
 
-第七步，也就是最后一步，上传代码到github远程仓库
+第七步，上传代码到github远程仓库
 
 ~~~
 git push -u origin master
