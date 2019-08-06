@@ -35,6 +35,10 @@
 **恢复数据库：**mysql\bin\mysql -h(ip) -uroot -p(password) databasename < database.sql  
 
 **复制数据库：**mysql\bin\mysqldump --all-databases > all-databases.sql  
+CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+mysqldump old_db -uroot -p123 --add-drop-table | mysql new_db -uroot -p123
+-- 不同服务器
+mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
 
 **修复数据库：**mysqlcheck -A -o -uroot -p54safer  
 
