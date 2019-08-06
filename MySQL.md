@@ -14,9 +14,7 @@
 
 **创建授权：**grant select on 数据库.* to 用户名@登录主机 identified by \"密码\" ;
 
-**删除授权:**  revoke select,insert,update,delete om *.* from test2@localhost;  
-
-
+**删除授权:**  revoke select,insert,update,delete om *.* from test2@localhost; 
 
 **创建数据库：**create database 库名;  
 
@@ -34,11 +32,11 @@
 
 **恢复数据库：**mysql\bin\mysql -h(ip) -uroot -p(password) databasename < database.sql  
 
-**复制数据库：**mysql\bin\mysqldump --all-databases > all-databases.sql  
-CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
-mysqldump old_db -uroot -p123 --add-drop-table | mysql new_db -uroot -p123
--- 不同服务器
-mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
+**复制数据库：**
+>CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+>mysqldump old_db -uroot -p123 --add-drop-table | mysql new_db -uroot -p123
+>-- 不同服务器
+>mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
 
 **修复数据库：**mysqlcheck -A -o -uroot -p54safer  
 
