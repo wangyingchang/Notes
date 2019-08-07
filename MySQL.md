@@ -38,6 +38,15 @@
 >-- 不同服务器
 >mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
 
+
+**导出整个数据库：** mysqldump -uroot -p123 dbname > d:\dbname.sql
+**导入整个数据库：** 
+> mysql -uroot -p123
+> CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+> use new_db;
+> source d:/dbname.sql
+
+
 **修复数据库：**mysqlcheck -A -o -uroot -p54safer  
 
 **文本数据导入：** load data local infile \"文件名\" into table 表名;  
