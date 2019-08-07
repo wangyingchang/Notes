@@ -4,11 +4,15 @@
 
 -------------------**打开服务**------------------
 
-**连接数据库**:mysql -h主机地址 -u用户名 -p用户密码   (注:u与用户名可以不用加空格，其它也一样 )
+**连接数据库**:
 
-**修改密码：**mysqladmin -u用户名 -p旧密码 password（ 新密码）;//MySQL5.0
+>mysql -h主机地址 -u用户名 -p用户密码   (注:u与用户名可以不用加空格，其它也一样 )
 
-​                   alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
+**修改密码：**
+
+>mysqladmin -u用户名 -p旧密码 password（ 新密码）;//MySQL5.0
+
+>alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
 
 **断开连接:**  exit(回车)
 
