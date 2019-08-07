@@ -13,7 +13,9 @@
 >mysqladmin -u用户名 -p旧密码 password（ 新密码）;//MySQL5.0
 >alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
 
-**断开连接:**  exit(回车)
+**断开连接:**  
+
+>exit(回车)
 
 **创建授权：** 
 
@@ -74,7 +76,6 @@
 > use new_db;
 > source d:/dbname.sql
 
-
 **查询表：**
 
 >select * from 表名;  
@@ -129,28 +130,36 @@
 
 >alter table 表名 drop 列名
 
-
 **复制表**
 
 (1) 复制表结构和表记录
 
-create table 表名 as select * from 要复制的表名 where 1=1
+>create table 表名 as select * from 要复制的表名 where 1=1
 
 (2) 只复制表结构 
 
-create table 表名 as select * from 要复制的表名 where 1=2
+>create table 表名 as select * from 要复制的表名 where 1=2
 
-**备份表:** mysqlbinmysqldump -h(ip) -uroot -p(password) databasename tablename > tablename.sql  
+**备份表:** 
 
-**恢复表:** mysqlbinmysql -h(ip) -uroot -p(password) databasename tablename < tablename.sql（操作前先把原来表删除）  
+>mysqlbinmysqldump -h(ip) -uroot -p(password) databasename tablename > tablename.sql  
+
+**恢复表:** 
+
+>mysqlbinmysql -h(ip) -uroot -p(password) databasename tablename < tablename.sql（操作前先把原来表删除） 
 
 
+**查看用户定义的表:**  
 
-**查看用户定义的表:**  selecet table_name from user_tables;
+>selecet table_name from user_tables;
 
-**查看用户定义的各种数据库对象:**  select object_name,object_type from user_objects
+**查看用户定义的各种数据库对象:**  
 
-**查看用户定义的表,视图,同义词和序列:**  select * from user_catalog
+>select object_name,object_type from user_objects
+
+**查看用户定义的表,视图,同义词和序列:**  
+
+>select * from user_catalog
 
 ---------------------------------------------------------------------------
 
