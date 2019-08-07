@@ -1,5 +1,6 @@
 
 
+
 #### MySQL 常用命令
 
 -------------------**打开服务**------------------
@@ -60,8 +61,10 @@
 **复制数据库：**
 
 >CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+
 >mysqldump old_db -uroot -p123 --add-drop-table | mysql new_db -uroot -p123
->-- 不同服务器
+
+>不同服务器
 >mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
 
 
@@ -72,8 +75,11 @@
 **导入整个数据库：** 
 
 > mysql -uroot -p123
+
 > CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+
 > use new_db;
+
 > source d:/dbname.sql
 
 **查询表：**
