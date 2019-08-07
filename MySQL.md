@@ -11,57 +11,77 @@
 **修改密码：**
 
 >mysqladmin -u用户名 -p旧密码 password（ 新密码）;//MySQL5.0
-
 >alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
 
 **断开连接:**  exit(回车)
 
-**创建授权：**grant select on 数据库.* to 用户名@登录主机 identified by \"密码\" ;
+**创建授权：** 
 
-**删除授权:**  revoke select,insert,update,delete om *.* from test2@localhost; 
+>grant select on 数据库.* to 用户名@登录主机 identified by \"密码\" ;
 
-**创建数据库：**create database 库名;  
+**删除授权:**  
 
-**显示数据库：**show databases;  
+>revoke select,insert,update,delete om *.* from test2@localhost; 
 
-**使用数据库：**use 库名;  
+**创建数据库：**
 
-**显示数据表：**show tables;  
+>create database 库名;  
 
-**显示表结构：**describe 表名;  
+**显示数据库：**
 
-**删除数据库：**drop database 库名;  
+>show databases;  
 
-**备份数据库：**mysql\bin\mysqldump -h(ip) -uroot -p(password) databasename > database.sql 
+**使用数据库：**
 
-**恢复数据库：**mysql\bin\mysql -h(ip) -uroot -p(password) databasename < database.sql  
+>use 库名;  
+
+**显示数据表：**
+
+>show tables;  
+
+**显示表结构：**
+
+>describe 表名;  
+
+**删除数据库：**
+
+>drop database 库名;  
+
+**备份数据库：**
+
+>mysql\bin\mysqldump -h(ip) -uroot -p(password) databasename > database.sql 
+
+**恢复数据库：**
+
+>mysql\bin\mysql -h(ip) -uroot -p(password) databasename < database.sql  
 
 **复制数据库：**
+
 >CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
 >mysqldump old_db -uroot -p123 --add-drop-table | mysql new_db -uroot -p123
 >-- 不同服务器
 >mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
 
 
-**导出整个数据库：** mysqldump -uroot -p123 dbname > d:\dbname.sql
+**导出整个数据库：**
+
+>mysqldump -uroot -p123 dbname > d:\dbname.sql
+
 **导入整个数据库：** 
+
 > mysql -uroot -p123
 > CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
 > use new_db;
 > source d:/dbname.sql
 
 
-**修复数据库：**mysqlcheck -A -o -uroot -p54safer  
+**查询表：**
 
-**文本数据导入：** load data local infile \"文件名\" into table 表名;  
+>select * from 表名;  
 
-**数据导入导出：**mysql\bin\mysqlimport database tables.txt 
+**创建表：**
 
-
-
-**查询表：**select * from 表名;  
-
-**创建表：**create table 表名 (字段设定列表); 
+>create table 表名 (字段设定列表); 
 
 >  create table stu(
 >
@@ -75,24 +95,39 @@
 >
 >  );
 
-**删除表：**drop table 表名; (无法删除有外键约束的表)
+**删除表：**
 
-**清空表：**delete from 表名; 
+>drop table 表名; (无法删除有外键约束的表)
 
-**删除主键:**  alter table tablen_name drop constraint keyname;
+**清空表：**
+
+>delete from 表名; 
+
+**删除主键:**  
+
+>alter table tablen_name drop constraint keyname;
 
 **修改表结构:**
 
-**修改表名：**alter table 旧表名 rename 新表名;
+**修改表名：**
 
-**修改列的数据类型:**alter table 表名 modify 列名 数据类型
+>alter table 旧表名 rename 新表名;
 
-**添加列:** alter table 表名 add 列名 数据类型
+**修改列的数据类型:**
 
-**修改列:** alter table 表名 change 旧列名 新列名 修改后的类型
+>alter table 表名 modify 列名 数据类型
 
-**删除列:** alter table 表名 drop 列名
+**添加列:** 
 
+>alter table 表名 add 列名 数据类型
+
+**修改列:** 
+
+>alter table 表名 change 旧列名 新列名 修改后的类型
+
+**删除列:** 
+
+>alter table 表名 drop 列名
 
 
 **复制表**
