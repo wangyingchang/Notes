@@ -14,8 +14,8 @@ mysql -h主机地址 -u用户名 -p用户密码   (注:u与用户名可以不用
 **修改密码：**
 
 ```mysql
-mysqladmin -u用户名 -p旧密码 password（新密码）;//MySQL5.0
-alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
+mysqladmin -u用户名 -p旧密码 password（新密码）;// MySQL5.0
+alter user 'root'@'localhost' identified by '你的新密码';// MySQL8.0
 ```
 
 **断开连接:**  
@@ -116,123 +116,118 @@ select * from 表名;
 **创建表：**
 
 ```mysql
->create table 表名 (字段设定列表); 
+create table 表名 (字段设定列表); 
 
->  create table stu(
->
->   sid varchar2(8) Primary Key,
->
->   name varchar2(20) Not Null,
->
->   age number(3),
->
->  addr varchar2(40)
->
->  );
+create table stu(
+  sid varchar2(8) Primary Key,
+  name varchar2(20) Not Null,
+  age number(3),
+  addr varchar2(40)
+);
 ```
 
 **删除表：**
 
 ```mysql
->drop table 表名; (无法删除有外键约束的表)
+drop table 表名; (无法删除有外键约束的表)
 ```
 
 **清空表：**
 
 ```mysql
->delete from 表名; 
+delete from 表名; 
 ```
 
 **删除主键:**  
 
 ```mysql
->alter table tablen_name drop constraint keyname;
+alter table tablen_name drop constraint keyname;
 ```
 
 **添加外键:**  
 
 ```mysql
->alter table db1.userprincesses add constraint userprincesses_ibfk_1 foreign key (userId) references db1.users(id);
+alter table db1.userprincesses add constraint userprincesses_ibfk_1 foreign key (userId) references db1.users(id);
 ```
 
 **删除外键:**  
 
 ```mysql
->alter table db1.userprincesses drop foreign key userprincesses_ibfk_1;
+alter table db1.userprincesses drop foreign key userprincesses_ibfk_1;
 ```
 
 
 **修改表名：**
 
 ```mysql
->alter table 旧表名 rename 新表名;
+alter table 旧表名 rename 新表名;
 ```
 
 **修改列的数据类型:**
 
 ```mysql
->alter table 表名 modify 列名 数据类型
+alter table 表名 modify 列名 数据类型
 ```
 
 **添加列:** 
 
 ```mysql
->alter table 表名 add 列名 数据类型
+alter table 表名 add 列名 数据类型
 ```
 
 **修改列:** 
 
 ```mysql
->alter table 表名 change 旧列名 新列名 修改后的类型
+alter table 表名 change 旧列名 新列名 修改后的类型
 ```
 
 **删除列:** 
 
 ```mysql
->alter table 表名 drop 列名
+alter table 表名 drop 列名
 ```
 
 **复制表结构和表记录**
 
 ```mysql
->create table 表名 as select * from 要复制的表名 where 1=1
+create table 表名 as select * from 要复制的表名 where 1=1
 ```
 
 **只复制表结构**
 
 ```mysql
->create table 表名 as select * from 要复制的表名 where 1=2
+create table 表名 as select * from 要复制的表名 where 1=2
 ```
 
 **备份表:** 
 
 ```mysql
->mysqlbinmysqldump -h(ip) -uroot -p(password) databasename tablename > tablename.sql  
+mysqlbinmysqldump -h(ip) -uroot -p(password) databasename tablename > tablename.sql  
 ```
 
 **恢复表:** 
 
 ```mysql
->mysqlbinmysql -h(ip) -uroot -p(password) databasename tablename < tablename.sql（操作前先把原来表删除）
+mysqlbinmysql -h(ip) -uroot -p(password) databasename tablename < tablename.sql（操作前先把原来表删除）
 ```
 
 
 **查看用户定义的表:**  
 
 ```mysql
->selecet table_name from user_tables;
+selecet table_name from user_tables;
 ```
 
 **查看用户定义的各种数据库对象:**  
 
 ```mysql
->select object_name,object_type from user_objects
+select object_name,object_type from user_objects
 ```
 
 **查看用户定义的表,视图,同义词和序列:**  
 
 ```mysql
->select * from user_catalog
+select * from user_catalog
 ```
 
 ---------------------------------------------------------------------------
