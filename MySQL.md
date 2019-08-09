@@ -14,7 +14,7 @@ mysql -h主机地址 -u用户名 -p用户密码   (注:u与用户名可以不用
 **修改密码：**
 
 ```mysql
-mysqladmin -u用户名 -p旧密码 password（ 新密码）;//MySQL5.0
+mysqladmin -u用户名 -p旧密码 password（新密码）;//MySQL5.0
 alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
 ```
 
@@ -32,69 +32,90 @@ grant select on 数据库.* to 用户名@登录主机 identified by \"密码\" ;
 
 **删除授权:**  
 
->revoke select,insert,update,delete om *.* from test2@localhost; 
+```mysql
+revoke select,insert,update,delete om *.* from test2@localhost; 
+```
 
 **创建数据库：**
 
->create database 库名 DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;  
+```mysql
+create database 库名 DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI; 
+```
 
 **显示数据库：**
 
->show databases;  
+```mysql
+show databases;
+```
 
 **使用数据库：**
 
->use 库名;  
+```mysql
+use 库名;
+```
 
 **显示数据表：**
 
->show tables;  
+```mysql
+show tables;  
+```
 
 **显示表结构：**
 
->describe 表名;  
+```mysql
+describe 表名;  
+```
 
 **删除数据库：**
 
->drop database 库名;  
-
+```mysql
+drop database 库名;  
+```
 **备份数据库：**
 
->mysql\bin\mysqldump -h(ip) -uroot -p(password) databasename > database.sql 
+```mysql
+mysql\bin\mysqldump -h(ip) -uroot -p(password) databasename > database.sql 
+```
 
 **恢复数据库：**
 
->mysql\bin\mysql -h(ip) -uroot -p(password) databasename < database.sql  
+```mysql
+mysql\bin\mysql -h(ip) -uroot -p(password) databasename < database.sql  
+```
 
 **复制数据库：**
 
->CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
-
->mysqldump old_db -uroot -p123 --add-drop-table | mysql new_db -uroot -p123
-
->不同服务器
+```mysql
+CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+mysqldump old_db -uroot -p123 --add-drop-table | mysql new_db -uroot -p123
+// 不同服务器
 >mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
+```
 
 **导出整个数据库：**
 
->mysqldump -uroot -p123 dbname > d:\dbname.sql
+```mysql
+mysqldump -uroot -p123 dbname > d:\dbname.sql
+```
 
 **导入整个数据库：** 
 
-> mysql -uroot -p123
-
-> CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
-
-> use new_db;
-
-> source d:/dbname.sql
+```mysql
+mysql -uroot -p123
+CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+use new_db;
+source d:/dbname.sql
+```
 
 **查询表：**
 
->select * from 表名;  
+```mysql
+select * from 表名;  
+```
 
 **创建表：**
 
+```mysql
 >create table 表名 (字段设定列表); 
 
 >  create table stu(
@@ -108,76 +129,111 @@ grant select on 数据库.* to 用户名@登录主机 identified by \"密码\" ;
 >  addr varchar2(40)
 >
 >  );
+```
 
 **删除表：**
 
+```mysql
 >drop table 表名; (无法删除有外键约束的表)
+```
 
 **清空表：**
 
+```mysql
 >delete from 表名; 
+```
 
 **删除主键:**  
 
+```mysql
 >alter table tablen_name drop constraint keyname;
+```
 
 **添加外键:**  
 
+```mysql
 >alter table db1.userprincesses add constraint userprincesses_ibfk_1 foreign key (userId) references db1.users(id);
+```
 
 **删除外键:**  
 
+```mysql
 >alter table db1.userprincesses drop foreign key userprincesses_ibfk_1;
+```
 
 
 **修改表名：**
 
+```mysql
 >alter table 旧表名 rename 新表名;
+```
 
 **修改列的数据类型:**
 
+```mysql
 >alter table 表名 modify 列名 数据类型
+```
 
 **添加列:** 
 
+```mysql
 >alter table 表名 add 列名 数据类型
+```
 
 **修改列:** 
 
+```mysql
 >alter table 表名 change 旧列名 新列名 修改后的类型
+```
 
 **删除列:** 
 
+```mysql
 >alter table 表名 drop 列名
+```
 
 **复制表结构和表记录**
 
+```mysql
 >create table 表名 as select * from 要复制的表名 where 1=1
+```
 
 **只复制表结构**
 
+```mysql
 >create table 表名 as select * from 要复制的表名 where 1=2
+```
 
 **备份表:** 
 
+```mysql
 >mysqlbinmysqldump -h(ip) -uroot -p(password) databasename tablename > tablename.sql  
+```
 
 **恢复表:** 
 
->mysqlbinmysql -h(ip) -uroot -p(password) databasename tablename < tablename.sql（操作前先把原来表删除） 
+```mysql
+>mysqlbinmysql -h(ip) -uroot -p(password) databasename tablename < tablename.sql（操作前先把原来表删除）
+```
 
 
 **查看用户定义的表:**  
 
+```mysql
 >selecet table_name from user_tables;
+```
 
 **查看用户定义的各种数据库对象:**  
 
+```mysql
 >select object_name,object_type from user_objects
+```
 
 **查看用户定义的表,视图,同义词和序列:**  
 
+```mysql
 >select * from user_catalog
+```
 
 ---------------------------------------------------------------------------
 
