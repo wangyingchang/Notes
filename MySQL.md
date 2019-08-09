@@ -28,7 +28,7 @@
 
 **创建数据库：**
 
->create database 库名;  
+>create database 库名 DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;  
 
 **显示数据库：**
 
@@ -66,7 +66,6 @@
 
 >不同服务器
 >mysqldump old_db -uroot -p123 --add-drop-table | mysql -h 192.168.5.115 iot_telecom -uroot -p123
-
 
 **导出整个数据库：**
 
@@ -114,7 +113,14 @@
 
 >alter table tablen_name drop constraint keyname;
 
-**修改表结构:**
+**添加外键:**  
+
+>alter table db1.userprincesses add constraint userprincesses_ibfk_1 foreign key (userId) references db1.users(id);
+
+**删除外键:**  
+
+>alter table db1.userprincesses drop foreign key userprincesses_ibfk_1;
+
 
 **修改表名：**
 
@@ -136,13 +142,11 @@
 
 >alter table 表名 drop 列名
 
-**复制表**
-
-(1) 复制表结构和表记录
+**复制表结构和表记录**
 
 >create table 表名 as select * from 要复制的表名 where 1=1
 
-(2) 只复制表结构 
+**只复制表结构**
 
 >create table 表名 as select * from 要复制的表名 where 1=2
 
