@@ -13,16 +13,22 @@ mysql -h主机地址 -u用户名 -p用户密码   (注:u与用户名可以不用
 
 **修改密码：**
 
->mysqladmin -u用户名 -p旧密码 password（ 新密码）;//MySQL5.0
->alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
+```mysql
+mysqladmin -u用户名 -p旧密码 password（ 新密码）;//MySQL5.0
+alter user 'root'@'localhost' identified by '你的新密码';//MySQL8.0
+```
 
 **断开连接:**  
 
->exit(回车)
+```mysql
+exit(回车)
+```
 
 **创建授权：** 
 
->grant select on 数据库.* to 用户名@登录主机 identified by \"密码\" ;
+```mysql
+grant select on 数据库.* to 用户名@登录主机 identified by \"密码\" ;
+```
 
 **删除授权:**  
 
