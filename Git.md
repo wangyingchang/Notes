@@ -1,9 +1,65 @@
+#### Git 常用命令
+
+查看当前分支
+
+~~~
+git branch
+~~~
+
+查看所有分支
+
+~~~
+git branch -a
+~~~
+
+创建分支
+
+~~~
+git checkout
+~~~
+
+切换分支
+
+~~~
+git checkout <name>
+~~~
+
+创建+切换分支
+
+~~~
+git checkout -b <name>
+~~~
+
+合并某分支到当前分支
+
+~~~
+git merge <name>
+~~~
+
+删除分支
+
+~~~
+git branch -d <name>
+~~~
+
+查看本地代码状态
+
+~~~
+git status
+~~~
+
+
+
+
+
 #### Git 设置密码
 
 ~~~
 git config --global user.name "wangyingchang"
 git config --global user.email "18386223128@163.com"
 ~~~
+
+
 
 
 
@@ -24,6 +80,8 @@ ssh-keygen -t rsa -C "您注册GitHub时的邮箱"
 ~~~
 ssh -T git@github.com
 ~~~
+
+
 
 
 
@@ -48,10 +106,6 @@ git commit -m "注释语句"
 ~~~
 
 第四步：去github仓库（Repository）拿https地址
-
-~~~
-
-~~~
 
 第五步：git仓库远程关联到github仓库
 
