@@ -5,6 +5,18 @@
 
 -------------------**打开服务**------------------
 
+**开启服务**
+
+~~~
+net stop mysql
+~~~
+
+**关闭服务**
+
+~~~
+net start mysql
+~~~
+
 **连接数据库**:
 
 ```mysql
@@ -102,7 +114,7 @@ mysqldump -uroot -p123 dbname > d:\dbname.sql
 
 ```mysql
 mysql -uroot -p123
-CREATE DATABASE new_db DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
+CREATE DATABASE db2 DEFAULT CHARACTER SET UTF8 COLLATE UTF8_GENERAL_CI;
 use new_db;
 source d:/dbname.sql
 ```
@@ -211,7 +223,6 @@ mysqlbinmysqldump -h(ip) -uroot -p(password) databasename tablename > tablename.
 mysqlbinmysql -h(ip) -uroot -p(password) databasename tablename < tablename.sql（操作前先把原来表删除）
 ```
 
-
 **查看用户定义的表:**  
 
 ```mysql
@@ -229,6 +240,38 @@ select object_name,object_type from user_objects
 ```mysql
 select * from user_catalog
 ```
+
+**允许远程访问MySQL**
+
+```mysql
+-- 创建用户、密码及权限范围 第一个 root为用户名 @后为适用的主机，‘%’表示所有电脑都可以访问连接，第二个 root 为密码
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'root' WITH GRANT OPTION;
+-- 立即生效
+flush privileges;
+
+```
+
+不允许远程访问
+
+~~~mysql
+-- 本机进入mysql,将mysql数据库下 user表 user=root的 host字段 ‘%’改为‘localhost’
+use mysql;
+select user,host from user;
+
+~~~
+
+
+
+**mysql5.7表名默认不区分大小写**
+
+```mysql
+-- my.in配置文件[mysqld]下添加
+lower_case_table_names=2 #1:不区分大小写  2:区分大小写 
+```
+
+
+
+
 
 ---------------------------------------------------------------------------
 
@@ -1101,7 +1144,7 @@ group by job
 having count(empno) >2
 ```
 
-		
+​		
 
 ​				
 
