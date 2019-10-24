@@ -28,6 +28,33 @@ git add -A
 git commit -m '提交信息'
 ~~~
 
+关联远程仓库(只需要关联一次)
+
+```
+git remote add origin 地址
+```
+
+移除远程仓库关联
+
+```
+git remote remove origin 
+```
+
+拉取远程仓库数据
+
+~~~
+git pull origin master
+~~~
+
+推送数据到远程仓库
+
+~~~
+git push -u origin master
+将本地仓库内容推送到远端仓库(-u 表示第一次推送master分支的所有内容，后面再推送就不需要-u了)
+~~~
+
+
+
 查看提交日志
 
 ~~~
@@ -62,12 +89,6 @@ git checkout -- 文件名
 
 ~~~
 git clone -
-~~~
-
-关联远程仓库(只需要关联一次)
-
-~~~
-git remote add origin 地址
 ~~~
 
 提交(-u在第一次提交分之的时候才用)
@@ -134,18 +155,6 @@ git status
 
 ~~~
 git reflog
-~~~
-
-git远程仓库
-
-~~~
-git remote add origin https:*//github.com/hanhailong/CustomRatingBar*
-~~~
-
-移除远程仓库
-
-~~~
-git remote remove origin 
 ~~~
 
 
