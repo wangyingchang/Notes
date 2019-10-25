@@ -46,11 +46,11 @@ git remote remove origin
 git pull origin master
 ~~~
 
-推送数据到远程仓库
+推送本地仓库数据到远程仓库
 
 ~~~
 git push -u origin master
-将本地仓库内容推送到远端仓库(-u 表示第一次推送master分支的所有内容，后面再推送就不需要-u了)
+(-u 表示第一次推送master分支的所有内容，后面再推送就不需要-u了)
 ~~~
 
 
@@ -188,7 +188,7 @@ ssh -T git@github.com
 
 
 
-#### Git仓库 上传项目到GitHub仓库
+#### Git本地仓库上传项目到GitHub仓库
 
 第一步：初始化仓库 
 
