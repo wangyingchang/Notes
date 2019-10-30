@@ -330,6 +330,8 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '123';
 
 ##### **Linux mysql 查询结果>excel**
 
+方式一：查询语句直接输出
+
 ~~~mysql
 -- 查看导出路径
 mysql> show variables like '%secure%';
@@ -346,7 +348,37 @@ mysql> show variables like '%secure%';
 mysql> select * into outfile '/var/lib/mysql-files/2019083016_db1.xls' from Users;
 ~~~
 
+方式二：在shell命令行下把Excel以文本方式打开，然后另存为，在编码选择ansi编码保存（推荐）
+语法格式
 
+~~~
+echo "select * from magic_tower_server_db_shouQ_dev_21.UserPrincesses" |  mysql -uroot -pzangaABc_LQB99 > 21.xls
+echo 查询语句 管道 登录mysql链接方式 > 定向输出文件
+~~~
+
+方式三：查询定向输出为Excel文件后缀，然后转码（权限不足）
+
+~~~
+mysql db_web -uroot  -e "select * from help_cat where 1 order by type desc limit 0,20" > /data/type.xls
+ mysql连接信息 数据库 用户名 密码 然后执行查询语句，定向输出。
+~~~
+
+将文件下载到本地，打开如果中文乱码，因为office默认的是gb2312编码，服务器端生成的很有可能是utf-8编码，这个时候你有两种选择:
+1、在服务器端使用iconv来进行编码转换
+
+```
+iconv -futf8 -tgb2312 -otype1.xls type.xls
+```
+
+如果转换顺利，那么从server上下载下来就可以使用了。
+2、转换如果不顺利，则会提示:
+
+```
+iconv: illegal input sequence at position 1841
+```
+
+类似错误，如下解决：
+先把type.xls下载下来，这个时候文件是utf-8编码的，用excel打开，乱码。把type.xls以文本方式打开，然后另存为，在编码选择ANSI编码保存。
 
 
 
