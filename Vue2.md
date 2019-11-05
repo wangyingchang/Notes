@@ -1204,5 +1204,709 @@ slot是标签的内容扩展，也就是说你用slot就可以在自定义组件
 </script>
 ~~~
 
+#### 五、vue-router
+
+##### 1.vue-router 安装
+
+npm install vue-router --save-dev
+
+##### 2.解读router/index.js文件
+
+```javascript
+import Vue from 'vue'   //引入Vue
+import Router from 'vue-router'  //引入vue-router
+import Hello from '@/components/Hello'  // 引入Hello.vue组件
+Vue.use(Router)  //Vue全局使用Router
+export default new Router({
+  routes: [              //配置路由，这里是个数组
+    {                    //每一个链接都是一个对象
+      path: '/',         //链接路径
+      name: 'Hello',     //路由名称，
+      component: Hello   //对应的组件模板
+    }
+  ]
+})
+```
+
+##### 3.vue-router 新增路由页
+
+(1)在src/components目录下 新建Hi.vue文件
+
+```javascript
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+  </div>
+</template>
+<script>
+export default {
+  name: 'hi',
+  data () {
+    return {
+      msg: 'Hi, I am JSPang'
+    }
+  }
+}
+</script>
+<style scoped>
+</style>
+```
+
+(2)在router/index.js文件中 引入Hi.vue组件并配置路由
+
+```javascript
+import Vue from 'vue'
+import Router from 'vue-router'  
+import Hello from '@/components/Hello'  
+import Hi from '@/components/Hi' // 引入Hi组件
+Vue.use(Router)
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Hello',
+      component: Hello
+    },
+    {// 配置路由
+      path:'/hi',
+      name:'Hi',
+      component:Hi
+    }
+  ]
+})
+```
+
+(3)router-link制作导航
+
+```html
+<router-link to="/">[显示字段]</router-link>
+<!-- 
+    to: 导航路径，填写在router/index.js文件里配置的path值，如果要导航到默认首页，只需to="/";
+    [显示字段]: 显示给用户的导航名称，比如首页 新闻页
+-->
+```
+
+##### 4.vue-router 配置子路由
+
+(1)router-link
+
+```html
+<p>导航 ：
+    <router-link to="/">首页</router-link> |
+    <router-link to="/hi">Hi页面</router-link> |
+    <router-link to="/hi/hi1">-Hi页面1</router-link> |
+    <router-link to="/hi/hi2">-Hi页面2</router-link>
+</p>
+```
+
+(2)Hi.vue 引入router-view
+
+```html
+<template>
+  <div class="hello">
+    <h1>{{ msg }}</h1>
+    <router-view class="aaa"></router-view>
+  </div>
+</template>
+```
+
+(3)router/index.js
+
+```javascript
+import Vue from 'vue'
+import Router from 'vue-router'  
+import Hello from '@/components/Hello'  
+import Hi from '@/components/Hi'
+import Hi1 from '@/components/Hi1'
+import Hi2 from '@/components/Hi2'
+Vue.use(Router)
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'Hello',
+      component: Hello
+    },
+    {
+      path:'/hi',
+      component:Hi,
+      children:[
+        {path:'/',component:Hi},
+        {path:'hi1',name:'hi1',component:Hi1},
+        {path:'hi2',name:'hi2',component:Hi2},
+      ]
+    }
+  ]
+})
+```
+
+##### 5.vue-router 传递参数
+
+(1)通过name传递参数
+
+```javascript
+//在路由文件src/router/index.js里配置name属性。
+routes: [
+{
+  path: '/',
+  name: 'Hello',
+  component: Hello
+}
+]
+//模板里(src/App.vue)用$route.name的形势接收
+<p>{{$route.namte}}</p>
+```
+
+(2)通过标签中的to传参参数
+
+```html
+<!-- src/App.vue的路由 -->
+<router-link :to="{name:'hi1',params:{username:'wang'}}">valueString</router-link>
+<!-- 
+    name：就是我们在路由配置文件中起的name值。
+    params：就是我们要传的参数，它也是对象形势，在对象里可以传递多个值。 
+-->
+<!-- Hi1.vue页接收 -->
+{{$route.params.username}}
+
+```
+
+(3)通过url传递参数
+
+```javascript
+// App.vue
+<router-link to="/params/198/新闻标题">params</router-link>
+// src/router/index.js
+{
+    path:'/params/:newsId/:newsTitle',
+    //path:'/params/:newsId(\\d+)/:newsTitle',//newsId只能是数字的形式
+    component:Params
+}
+// 新建params.vue
+<template>
+    <div>
+        <h2>{{ msg }}</h2>
+        <p>新闻ID：{{ $route.params.newsId}}</p>
+        <p>新闻标题：{{ $route.params.newsTitle}}</p>
+    </div>
+</template>
+<script>
+export default {
+  name: 'params',
+  data () {
+    return {
+      msg: 'params page'
+    }
+  }
+}
+</script>
 
 
+```
+
+##### 6.vue-router 单页面多路由区域操作
+
+```html
+<!-- App.vue -->
+<router-view></router-view>
+ <router-view name="left" style="float:left;width:50%;background-color:#ccc;height:300px;"></router-view>
+ <router-view name="right" style="float:right;width:50%;background-color:#c0c;height:300px;"></router-view>
+
+```
+
+```javascript
+import Vue from 'vue'
+import Router from 'vue-router'
+import Hello from '@/components/Hello'
+import Hi1 from '@/components/Hi1'
+import Hi2 from '@/components/Hi2'
+Vue.use(Router)
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      components: {
+        default:Hello,
+        left:Hi1,
+        right:Hi2
+      }
+    },{
+      path: '/Hi',
+      components: {
+        default:Hello,
+        left:Hi2,
+        right:Hi1
+      }
+    }
+  ]
+})
+
+```
+
+##### 7.vue-router 重定向-redirect
+
+```javascript
+// src/router/index.js把原来的component换成redirect参数就可以了;
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      component: Hello
+    },{
+      path:'/params/:newsId(\\d+)/:newsTitle',
+      component:Params
+    },{
+      path:'/goback',
+      redirect:'/'
+    }
+  ]
+})
+//设置了goback路由，但是它并没有配置任何component（组件），而是直接redirect到path:’/’下了，这就是一个简单的重新定向。
+
+//重定向时传递参数
+{
+  path:'/params/:newsId(\\d+)/:newsTitle',
+  component:Params
+},
+{
+  path:'/goParams/:newsId(\\d+)/:newsTitle',
+  redirect:'/params/:newsId(\\d+)/:newsTitle'
+}
+
+```
+
+##### 8.vue-router alias别名的使用
+
+```javascript
+// src/router/index.js
+{
+    path: '/hi1',
+    component: Hi1,
+    alias:'/jspang'
+ }
+// 直接使用<router-link>标签里的to属性，进行重新定向
+<router-link  to="/jspang">jspang</router-link>
+
+// redirect和alias的区别
+// redirect：仔细观察URL，redirect是直接改变了url的值，把url变成了真实的path路径。
+// alias：URL路径没有别改变，这种情况更友好，让用户知道自己访问的路径，只是改变了<router-view>中的内容。
+
+```
+
+##### 9.vue-router 过度动画
+
+```javascript
+// src/App.vue <router-view>标签的外部添加<transition>标签
+<transition name="fade">
+  <router-view ></router-view>
+</transition>
+<style>
+.fade-enter {
+  opacity:0;
+}
+.fade-leave{
+  opacity:1;
+}
+.fade-enter-active{
+  transition:opacity .5s;
+}
+.fade-leave-active{
+  opacity:0;
+  transition:opacity .5s;
+}
+</style>
+// css过渡类名： 组件过渡过程中，会有四个CSS类名进行切换，这四个类名与transition的name属性有关，比如name=”fade”,会有如下四个CSS类名：
+// fade-enter:进入过渡的开始状态，元素被插入时生效，只应用一帧后立刻删除。
+// fade-enter-active:进入过渡的结束状态，元素被插入时就生效，在过渡过程完成后移除。
+// fade-leave:离开过渡的开始状态，元素被删除时触发，只应用一帧后立刻删除。
+// fade-leave-active:离开过渡的结束状态，元素被删除时生效，离开过渡完成后被删除。
+// 从上面四个类名可以看出，fade-enter-active和fade-leave-active在整个进入或离开过程中都有效，所以CSS的transition属性在这两个类下进行设置。
+
+
+```
+
+##### 10.vue-router 404页面
+
+```javascript
+// src/router/index.js
+{
+   path:'*',
+   component:Error
+}
+// 新建src/components/Error.vue文件
+<template>
+    <div>
+        <h2>{{ msg }}</h2>
+    </div>
+</template>
+<script>
+export default {
+  data () {
+    return {
+      msg: 'Error:404'
+    }
+  }
+}
+</script>
+
+// App.vue 点击下面路由到404页面
+<router-link to="/bbbbbb">我是瞎写的</router-link> |
+
+
+```
+
+##### 11.vue-router 路由中的钩子函数
+
+```javascript
+// src/router/index.js路由文件中我们只能写beforeEnter
+{
+    path:'/params/:newsId(\\d+)/:newsTitle',
+    component:Params,
+    beforeEnter:(to,from,next)=>{
+    console.log('我进入了params模板');
+    console.log(to);
+    console.log(from);
+    next();
+},
+// to:路由将要跳转的路径信息，信息是包含在对像里边的。
+// from:路径跳转前的路径信息，也是一个对象的形式。
+// next:路由的控制参数，常用的有next(true)和next(false)。
+
+// 写在模板中的钩子函数 在配置文件中的钩子函数，只有一个钩子-beforeEnter，如果我们写在模板中就可以有两个钩子函数可以使用：
+// beforeRouteEnter：在路由进入前的钩子函数。
+// beforeRouteLeave：在路由离开前的钩子函数。
+export default {
+  name: 'params',
+  data () {
+    return {
+      msg: 'params page'
+    }
+  },
+  beforeRouteEnter:(to,from,next)=>{
+    console.log("准备进入路由模板");
+    next();
+  },
+  beforeRouteLeave: (to, from, next) => {
+    console.log("准备离开路由模板");
+    next();
+  }
+}
+</script>
+
+```
+
+##### 12.vue-router 编程式导航
+
+```java
+// 用<router-link>标签或者直接操作地址栏的形式完成的，那如果在业务逻辑代码中需要跳转页面我们如何操作？这就是我们要说的编程式导航，顾名思义，就是在业务逻辑代码中实现导航。
+//this.$router.go(-1) 和 this.$router.go(1)
+//这两个编程式导航的意思是后退和前进，功能跟我们浏览器上的后退和前进按钮一样，这在业务逻辑中经常用到。比如条件不满足时，我们需要后退。
+
+// App.vue
+<button @click="goback">后退</button>
+<script>
+export default {
+  name: 'app',
+  methods:{
+    goback(){
+      this.$router.go(-1);
+    }
+  }
+}
+</script>
+
+//this.$router.push(‘/xxx ‘)
+//这个编程式导航都作用就是跳转，比如我们判断用户名和密码正确时，需要跳转到用户中心页面或者首页，都用到这个编程的方法来操作路由。
+//我们设置一个按钮，点击按钮后回到站点首页。
+<button @click="goHome">回到首页</button>
+export default {
+  name: 'app',
+  methods:{
+    goHome(){
+      this.$router.push('/');
+    }
+  }
+}
+```
+
+#### 六、vuex
+
+##### 1.vuex 安装
+
+npm n install vuex --save
+
+##### 2.vuex demo
+
+```javascript
+// 1.新建store/store.js文件，
+// 2.引入(import)vue和vuex
+// 3.使用vuex:Vue.use(Vuex)
+```
+
+
+
+#### 7、Vue-Cli
+
+##### 0.技术栈
+
+vue2+webpack+vueRouter+element
+
+##### 1.安装nodejs
+
+node -v  &&  npm -v
+
+##### 2.安装vue-cli
+
+npm install vue-cli -g
+
+##### 3.初始化项目:采用webpack模板
+
+vue init webpack vue_demo
+
+##### 4.进入项目根目录
+
+cd vue_demo
+
+##### 5.安装package.json中依赖包
+
+npm install
+
+##### 6.开发模式下运行项目
+
+npm run dev
+
+##### 7.打包项目
+
+npm run build  --根目录生成了dist文件夹,
+
+##### 8。项目结构
+
+```javascript
+|-- build                            // 项目构建(webpack)相关代码
+|   |-- build.js                     // 生产环境构建代码
+|   |-- check-version.js             // 检查node、npm等版本
+|   |-- dev-client.js                // 热重载相关
+|   |-- dev-server.js                // 构建本地服务器
+|   |-- utils.js                     // 构建工具相关
+|   |-- webpack.base.conf.js         // webpack基础配置
+|   |-- webpack.dev.conf.js          // webpack开发环境配置
+|   |-- webpack.prod.conf.js         // webpack生产环境配置
+|-- config                           // 项目开发环境配置
+|   |-- dev.env.js                   // 开发环境变量
+|   |-- index.js                     // 项目一些配置变量
+|   |-- prod.env.js                  // 生产环境变量
+|   |-- test.env.js                  // 测试环境变量
+|-- src                              // 源码目录
+|   |-- components                     // vue公共组件
+|   |-- store                          // vuex的状态管理
+|   |-- App.vue                        // 页面入口文件
+|   |-- main.js                        // 程序入口文件，加载各种公共组件
+|-- static                           // 静态文件，比如一些图片，json数据等
+|   |-- data                           // 群聊分析得到的数据用于数据可视化
+|-- .babelrc                         // ES6语法编译配置
+|-- .editorconfig                    // 定义代码格式
+|-- .eslintrc.js                     //javascript 代码检查
+|-- .gitignore                       // git上传需要忽略的文件格式
+|-- README.md                        // 项目说明
+|-- index.html                       // 入口页面
+|-- package.json                     // 项目基本信息
+```
+
+package.json
+
+```javascript
+package.json 文件是项目根目录下的一个文件，定义该项目开发所需要的各种模块以及一些项目配置信息(如项目名称、版本、描述、作者等);
+
+scripts字段: 这个字段定义了你可以用npm运行的命令。在开发环境下，在命令行工具中运行npm run dev 就相当于执行 node build/dev-server.js .也就是开启了一个node写的开发行建议服务器。由此可以看出script字段是用来指定npm相关命令的缩写;
+ "scripts": {
+    "dev": "node build/dev-server.js",
+    "build": "node build/build.js"
+  },
+dependencies字段: 指项目运行时所依赖的模块;
+devDependencies字段: 指定了项目开发时所依赖的模块;
+在命令行中运行npm install命令，会自动安装dependencies和devDempendencies字段中的模块。package.json还有很多相关配置，如果你想全面了解，可以专门去百度学习一下。
+```
+
+dev-server.js
+
+```javascript
+// 检查 Node 和 npm 版本
+require('./check-versions')()
+
+// 获取 config/index.js 的默认配置
+var config = require('../config')
+
+// 如果 Node 的环境无法判断当前是 dev / product 环境
+// 使用 config.dev.env.NODE_ENV 作为当前的环境
+if (!process.env.NODE_ENV) process.env.NODE_ENV = JSON.parse(config.dev.env.NODE_ENV)
+
+// 使用 NodeJS 自带的文件路径工具
+var path = require('path')
+
+// 使用 express
+var express = require('express')
+
+// 使用 webpack
+var webpack = require('webpack')
+
+// 一个可以强制打开浏览器并跳转到指定 url 的插件
+var opn = require('opn')
+
+// 使用 proxyTable
+var proxyMiddleware = require('http-proxy-middleware')
+
+// 使用 dev 环境的 webpack 配置
+var webpackConfig = require('./webpack.dev.conf')
+
+// default port where dev server listens for incoming traffic
+// 如果没有指定运行端口，使用 config.dev.port 作为运行端口
+var port = process.env.PORT || config.dev.port
+
+// Define HTTP proxies to your custom API backend
+// https://github.com/chimurai/http-proxy-middleware
+// 使用 config.dev.proxyTable 的配置作为 proxyTable 的代理配置
+var proxyTable = config.dev.proxyTable
+
+// 使用 express 启动一个服务
+var app = express()
+
+// 启动 webpack 进行编译
+var compiler = webpack(webpackConfig)
+
+// 启动 webpack-dev-middleware，将 编译后的文件暂存到内存中
+var devMiddleware = require('webpack-dev-middleware')(compiler, {
+  publicPath: webpackConfig.output.publicPath,
+  stats: {
+    colors: true,
+    chunks: false
+  }
+})
+
+// 启动 webpack-hot-middleware，也就是我们常说的 Hot-reload
+var hotMiddleware = require('webpack-hot-middleware')(compiler)
+// force page reload when html-webpack-plugin template changes
+compiler.plugin('compilation', function (compilation) {
+  compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
+    hotMiddleware.publish({ action: 'reload' })
+    cb()
+  })
+})
+
+// proxy api requests
+// 将 proxyTable 中的请求配置挂在到启动的 express 服务上
+Object.keys(proxyTable).forEach(function (context) {
+  var options = proxyTable[context]
+  if (typeof options === 'string') {
+    options = { target: options }
+  }
+  app.use(proxyMiddleware(context, options))
+})
+
+// handle fallback for HTML5 history API
+// 使用 connect-history-api-fallback 匹配资源，如果不匹配就可以重定向到指定地址
+app.use(require('connect-history-api-fallback')())
+
+// serve webpack bundle output
+// 将暂存到内存中的 webpack 编译后的文件挂在到 express 服务上
+app.use(devMiddleware)
+
+// enable hot-reload and state-preserving
+// compilation error display
+// 将 Hot-reload 挂在到 express 服务上
+app.use(hotMiddleware)
+
+// serve pure static assets
+// 拼接 static 文件夹的静态资源路径
+var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+
+// 为静态资源提供响应服务
+app.use(staticPath, express.static('./static'))
+
+// 让我们这个 express 服务监听 port 的请求，并且将此服务作为 dev-server.js 的接口暴露
+module.exports = app.listen(port, function (err) {
+  if (err) {
+    console.log(err)
+    return
+  }
+  var uri = 'http://localhost:' + port
+  console.log('Listening at ' + uri + '\n')
+  
+  // when env is testing, don't need open it
+  // 如果不是测试环境，自动打开浏览器并跳到我们的开发地址
+  if (process.env.NODE_ENV !== 'testing') {
+    opn(uri)
+  }
+})
+```
+
+webpack.base.config.js
+
+```javascript
+module.export = {
+    // 编译入口文件
+    entry: {},
+    // 编译输出路径
+    output: {},
+    // 一些解决方案配置
+    resolve: {},
+    resolveLoader: {},
+    module: {
+        // 各种不同类型文件加载器配置
+        loaders: {
+        ...
+        ...
+        // js文件用babel转码
+        {
+            test: /\.js$/,
+            loader: 'babel',
+            include: projectRoot,
+            // 哪些文件不需要转码
+            exclude: /node_modules/
+        },
+        ...
+        ...
+        }
+    },
+    // vue文件一些相关配置
+    vue: {}
+}
+```
+
+.babelrc
+
+
+
+```javascript
+//Babel解释器的配置文件，存放在根目录下。Babel是一个转码器，项目里需要用它将ES6代码转为ES5代码。如果你想了解更多，可以查看babel的知识。
+{
+  //设定转码规则
+  "presets": [
+    ["env", { "modules": false }],
+    "stage-2"
+  ],
+  //转码用的插件
+  "plugins": ["transform-runtime"],
+  "comments": false,
+  //对BABEL_ENV或者NODE_ENV指定的不同的环境变量，进行不同的编译操作
+  "env": {
+    "test": {
+      "presets": ["env", "stage-2"],
+      "plugins": [ "istanbul" ]
+    }
+  }
+}
+```
+
+.editorconfig
+
+```javascript
+//该文件定义项目的编码规范，编译器的行为会与.editorconfig文件中定义的一致，并且其优先级比编译器自身的设置要高，这在多人合作开发项目时十分有用而且必要。
+root = true
+[*]    // 对所有文件应用下面的规则
+charset = utf-8                    // 编码规则用utf-8
+indent_style = space               // 缩进用空格
+indent_size = 2                    // 缩进数量为2个空格
+end_of_line = lf                   // 换行符格式
+insert_final_newline = true        // 是否在文件的最后插入一个空行
+trim_trailing_whitespace = true    // 是否删除行尾的空格
+```
