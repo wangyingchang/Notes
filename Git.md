@@ -142,7 +142,7 @@ git merge <name>
 删除分支
 
 ~~~
-git branch -d <name>
+git branch -D <name>
 ~~~
 
 查看本地代码状态
