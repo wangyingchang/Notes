@@ -37,6 +37,12 @@ kill -9 XX
 -- kill为linux杀进程命令, XX为上一个命令的输出第二列的数字
 ~~~
 
+**杀死指定目录下所有进程**
+
+```
+ps -ef | grep mowangdougongzhu/apps | grep mowangdougongzhu/apps | cut -c 9-15 | xargs kill -9
+```
+
 **查看文件大小**
 
 ~~~
@@ -586,7 +592,7 @@ HP-UNIX 中默认普通用户没得crontab 权限 ，要想放开普通用户的
 每年的一月和四月，4号到9号的3点12分和3点55分执行/bin/rm -f expire.1st这个指令，并把结果添加在mm.txt这个文件之后（mm.txt文件位于用户自己的目录位置）。 
 12,55 3 4-9 1,4 * /bin/rm -f expire.1st$#@62;$#@62;mm.txt to
 
-**备份linux系统上数据库 sh脚本**
+**备份数据库脚本**
 
 ~~~sh
 #!/bin/bash
@@ -618,5 +624,32 @@ echo
 done
 
 echo "done"
+~~~
+
+备份日志脚本
+
+~~~sh
+
+LOGDIR=/home/mwdgz/project/mowangdougongzhu/apps/server
+
+BACKUP_LOGDIR=/home/mwdgz/backup/logs
+
+
+date=`date +%Y_%m_%d`
+tarFileName=$date"_logs.tar"
+
+
+tar cvf $LOGDIR/$tarFileName $LOGDIR/logs
+
+mv $LOGDIR/$tarFileName $BACKUP_LOGDIR
+
+rm -rf $LOGDIR/logs/pomelo.log.*
+rm -rf $LOGDIR/logs/qosMonitor.log.*
+rm -rf $LOGDIR/logs/sqlMonitor.log.*
+
+echo "" > $LOGDIR/logs/pomelo.log
+echo "" > $LOGDIR/logs/qosMonitor.log
+echo "" > $LOGDIR/logs/sqlMonitor.log
+
 ~~~
 
